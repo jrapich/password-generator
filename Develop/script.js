@@ -13,23 +13,10 @@ const mathChars = [upperCase.length -1,  lowerCase.length -1, specialChar.length
 var randomNumber = [];
 var tempNumber = 0;
 var singleChar = "";
+const minPassLength = 8;
+const maxPassLength = 128;
+var userPassLength = 24;
 
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password;
-
-  //sets some arrays/vars to blank at the end
-  //so when the user clicks the button and this generator executes again
-  //they don't include the previous result
-  randomNumber = [];
-  tempNumber = 0;
-  singleChar = "";
-}
 
 //lets define all the function logic below
 
@@ -37,7 +24,7 @@ function writePassword() {
 //here we want to generate a character from a random number, and add to the password
 //and repeat that until it reaches the password length requested by user
 function generatePassword(){ 
-  passHasher(randomNumberGen(0, mathChars));
+  passMake(passHasher(randomNumberGen(0, mathChars)));
   return password;
 }
 //random number generator
@@ -87,7 +74,34 @@ function passHasher(num) {
   console.log("random char generated is: " + singleChar);
   return singleChar;
 }
+//create a password based on the above random character
+//password will have min length of 8 and max of 128
+function passMake(char) {
+  password = password + char;
+  return password;
+}
 
+
+//most of this below is what was in the original source
+
+
+// Get references to the #generate element
+var generateBtn = document.querySelector("#generate");
+
+// Write password to the #password input
+function writePassword() {
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+
+   //sets some arrays/vars to blank at the end
+  //so when the user clicks the button and this generator executes again
+  //they don't include the previous result
+  randomNumber = [];
+  tempNumber = 0;
+  singleChar = "";
+  password = ""; 
+}
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
