@@ -42,6 +42,12 @@ header {
   padding: 30px 40px;
 }
 
+.card-header {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .card-header::after {
   content: " ";
   display: block;
