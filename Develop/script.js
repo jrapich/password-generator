@@ -33,21 +33,24 @@ const passwordType = {
 function generatePassword(){
   password ="";
   askForLength();
-
-  if (userPassLength < minPassLength) {
-    password = "ERROR: " + userPassLength + " is too small, please pick a valid length.";
+    if (!userPassLength) {
+      password = "ERROR: please pick a valid length.";
     return password;
+  } else if (userPassLength < minPassLength) {
+      password = "ERROR: " + userPassLength + " is too small, please pick a valid length.";
+      return password;
   } else if (userPassLength > maxPassLength) {
-    password = `ERROR: ${userPassLength} is too big, please pick a valid length.`;
-    return password;
-  } else {
-    console.log("begin password generation. password length selected: " + userPassLength);
-    for (j = 0; j < userPassLength; j++) {
-      passMake(passHasher(randomNumberGen(0, mathChars)));
-    }
-    console.log("generated password is " + password);
-    console.log("the password length is " + password.length);
-    return password;
+      password = `ERROR: ${userPassLength} is too big, please pick a valid length.`;
+      return password;
+  } else { 
+      selectPassType();
+      console.log("begin password generation. password length selected: " + userPassLength);
+      for (j = 0; j < userPassLength; j++) {
+        passMake(passHasher(randomNumberGen(0, mathChars)));
+      }
+      console.log("generated password is " + password);
+      console.log("the password length is " + password.length);
+      return password;
   }
 }
 //random number generator
@@ -110,6 +113,11 @@ function passMake(char) {
 //asks the user for password length between 8 andd 128
 function askForLength(){
   userPassLength = prompt("Choose a password length: \nIt must be a number between 8 - 128","enter password length here");
+  if (!userPassLength) {
+    alert("please choose a valid number");
+    console.log(userPassLength);
+    return userPassLength;
+  }
   userPassLength = parseInt(userPassLength, 10);
   if (userPassLength < minPassLength) {
       alert("you must choose a number between 8 and 128");
