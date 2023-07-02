@@ -18,3 +18,5 @@ this helped me figure out how to store a for loop result to an array:
 https://stackoverflow.com/questions/11455430/javascript-storing-for-loop-result
 this taught me how to convert a user entry of a prompt() to a number because prompt() returns only strings
 https://stackoverflow.com/questions/17907455/how-to-get-numeric-value-from-a-prompt-box
+this was a good reference for me for truthy conditionals
+https://developer.mozilla.org/en-US/docs/Glossary/Truthy

@@ -21,7 +21,21 @@ const userPasswordType = {
   isUpperCase: true,
   isLowerCase: true,
   isSpecialChars: true,
-  isNumbers: true
+  isNumbers: true,
+  isValid: true,
+  typeCheck: function() {
+    if (
+      this.isLowerCase === null &&
+      this.isUpperCase === null &&
+      this.isSpecialChars === null &&
+      this.isNumbers === null
+    ) {
+      this.isValid = false;
+      return this.isValid;
+    } else {
+      return;
+    }
+  }
 }
 
 
@@ -44,13 +58,18 @@ function generatePassword(){
       return password;
   } else { 
       selectPassType();
-      console.log("begin password generation. password length selected: " + userPassLength);
-      for (j = 0; j < userPassLength; j++) {
-        passMake(passHasher(randomNumberGen(0, mathChars)));
-      }
-      console.log("generated password is " + password);
-      console.log("the password length is " + password.length);
-      return password;
+      if (!userPasswordType.isValid) {
+        password = "ERROR: you must choose at least one character type."
+        return password;
+      } else {
+          console.log("begin password generation. password length selected: " + userPassLength);
+          for (j = 0; j < userPassLength; j++) {
+          passMake(passHasher(randomNumberGen(0, mathChars)));
+          }
+          console.log("generated password is " + password);
+          console.log("the password length is " + password.length);
+          return password;
+        }
   }
 }
 //random number generator
@@ -76,39 +95,42 @@ function randomNumberGen (min, max) {
 }
 //character picker based on random number, will pass one random char
 function passHasher(num) {
-  var charPicker = ["upper", "lower", "special", "number"];
-  
   //the old charPicker logic for future study/reference:
-  //charPicker = charPicker[Math.floor(Math.random() * charPicker.length)];
+    var charPicker = ["upper", "lower", "special", "number"];
+    charPicker = charPicker[Math.floor(Math.random() * charPicker.length)];
+    //not using these next 2 lines anymore but want to leave it here for future study/reference
+    //as it took so long to figure out at the time. haha
+    //tempNumber = Math.floor(Math.random() * num.length);
+    //tempNumber = randomNumber[tempNumber];
+    if (charPicker === "upper") {
+      singleChar = upperCase[randomNumber[0]];
+      console.log("random number picked for char group is: " + randomNumber[0]);
+    } 
+    if (charPicker === "lower") {
+      singleChar = lowerCase[randomNumber[1]];
+      console.log("random number picked for char group is: " + randomNumber[1]);
+    }
+    if (charPicker === "special") {
+      singleChar = specialChar[randomNumber[2]];
+      console.log("random number picked for char group is: " + randomNumber[2]);
+    }
+    if (charPicker === "number") {
+      singleChar = numeric[randomNumber[3]];
+      console.log("random number picked for char group is: " + randomNumber[3]);
+    }
+    console.log("char group picked is: " + charPicker);
+    console.log("random char generated is: " + singleChar);
+    //resetting the random number array here or else the array gets insanely big when i try to loop it
+    randomNumber = [];
+    return singleChar;
+
 
   //new logic for using only the chars the user selected is as follows
-
-  //not using these next 2 lines anymore but want to leave it here for future study/reference
-  //as it took so long to figure out at the time. haha
-  //tempNumber = Math.floor(Math.random() * num.length);
-  //tempNumber = randomNumber[tempNumber];
-  if (charPicker === "upper") {
-    singleChar = upperCase[randomNumber[0]];
-    console.log("random number picked for char group is: " + randomNumber[0]);
-  } 
-  if (charPicker === "lower") {
-    singleChar = lowerCase[randomNumber[1]];
-    console.log("random number picked for char group is: " + randomNumber[1]);
-  }
-  if (charPicker === "special") {
-    singleChar = specialChar[randomNumber[2]];
-    console.log("random number picked for char group is: " + randomNumber[2]);
-  }
-  if (charPicker === "number") {
-    singleChar = numeric[randomNumber[3]];
-    console.log("random number picked for char group is: " + randomNumber[3]);
-  }
-  console.log("char group picked is: " + charPicker);
-  console.log("random char generated is: " + singleChar);
-  //resetting the random number array here or else the array gets insanely big when i try to loop it
-  randomNumber = [];
-  return singleChar;
+  //const charPicker = {
+    
+    //}
 }
+    
 //create a password based on the above random character
 function passMake(char) {
   password = password + char;
@@ -142,6 +164,7 @@ function selectPassType(){
   userPasswordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for yes, or Cancel for no.");
   userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for yes, or Cancel for no.");
   userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.typeCheck();
   console.log(userPasswordType);
 }
 //most of this below is what was in the original source
