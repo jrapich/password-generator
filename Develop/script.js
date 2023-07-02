@@ -15,7 +15,7 @@ var tempNumber = 0;
 var singleChar = "";
 const minPassLength = 8;
 const maxPassLength = 128;
-var userPassLength = 24;
+var userPassLength = 0;
 var password = "";
 
 
@@ -26,13 +26,23 @@ var password = "";
 //and repeat that until it reaches the password length requested by user
 function generatePassword(){
   password ="";
-  console.log("begin password generation. password length selected: " + userPassLength);
-  for (j = 0; j < userPassLength; j++) {
-    passMake(passHasher(randomNumberGen(0, mathChars)));
+  askForLength();
+
+  if (userPassLength < minPassLength) {
+    password = "ERROR: " + userPassLength + " is too small, please pick a valid length.";
+    return password;
+  } else if (userPassLength > maxPassLength) {
+    password = `ERROR: ${userPassLength} is too big, please pick a valid length.`;
+    return password;
+  } else {
+    console.log("begin password generation. password length selected: " + userPassLength);
+    for (j = 0; j < userPassLength; j++) {
+      passMake(passHasher(randomNumberGen(0, mathChars)));
+    }
+    console.log("generated password is " + password);
+    console.log("the password length is " + password.length);
+    return password;
   }
-  console.log("generated password is " + password);
-  console.log("the password length is " + password.length);
-  return password;
 }
 //random number generator
 //will pick a number between 0 and the length of each of the char arrays above
@@ -84,15 +94,29 @@ function passHasher(num) {
   return singleChar;
 }
 //create a password based on the above random character
-//password will have min length of 8 and max of 128
 function passMake(char) {
   password = password + char;
   return password;
 }
 
+//lets define the prompts/alerts and their logic
+
+//asks the user for password length between 8 andd 128
+function askForLength(){
+  userPassLength = prompt("Choose a password length: \nIt must be a number between 8 - 128","enter password length here");
+  userPassLength = parseInt(userPassLength, 10);
+  if (userPassLength < minPassLength) {
+      alert("you must choose a number between 8 and 128");
+  } else if (userPassLength > maxPassLength) {
+      alert("you must choose a number between 8 and 128");
+  } else if (userPassLength > minPassLength && userPassLength < maxPassLength || userPassLength === minPassLength || userPassLength === maxPassLength) {
+      return userPassLength;
+  } else {
+    alert("please choose a valid number");
+  }
+}
 
 //most of this below is what was in the original source
-
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
