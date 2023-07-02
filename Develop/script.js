@@ -17,7 +17,7 @@ const minPassLength = 8;
 const maxPassLength = 128;
 var userPassLength = 0;
 var password = "";
-const passwordType = {
+const userPasswordType = {
   isUpperCase: true,
   isLowerCase: true,
   isSpecialChars: true,
@@ -77,9 +77,16 @@ function randomNumberGen (min, max) {
 //character picker based on random number, will pass one random char
 function passHasher(num) {
   var charPicker = ["upper", "lower", "special", "number"];
-  charPicker = charPicker[Math.floor(Math.random() * charPicker.length)];
-  tempNumber = Math.floor(Math.random() * num.length);
-  tempNumber = randomNumber[tempNumber];
+  
+  //the old charPicker logic for future study/reference:
+  //charPicker = charPicker[Math.floor(Math.random() * charPicker.length)];
+
+  //new logic for using only the chars the user selected is as follows
+
+  //not using these next 2 lines anymore but want to leave it here for future study/reference
+  //as it took so long to figure out at the time. haha
+  //tempNumber = Math.floor(Math.random() * num.length);
+  //tempNumber = randomNumber[tempNumber];
   if (charPicker === "upper") {
     singleChar = upperCase[randomNumber[0]];
     console.log("random number picked for char group is: " + randomNumber[0]);
@@ -131,11 +138,11 @@ function askForLength(){
 }
 //asks for the char types in the password and saves it in passwordType object
 function selectPassType(){
-  passwordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for yes, or Cancel for no.");
-  passwordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for yes, or Cancel for no.");
-  passwordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for yes, or Cancel for no.");
-  passwordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for yes, or Cancel for no.");
-  console.log(passwordType);
+  userPasswordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for yes, or Cancel for no.");
+  console.log(userPasswordType);
 }
 //most of this below is what was in the original source
 
