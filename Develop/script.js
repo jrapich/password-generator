@@ -17,6 +17,12 @@ const minPassLength = 8;
 const maxPassLength = 128;
 var userPassLength = 0;
 var password = "";
+const passwordType = {
+  isUpperCase: true,
+  isLowerCase: true,
+  isSpecialChars: true,
+  isNumbers: true
+}
 
 
 //lets define all the function logic below
@@ -115,7 +121,14 @@ function askForLength(){
     alert("please choose a valid number");
   }
 }
-
+//asks for the char types in the password and saves it in passwordType object
+function selectPassType(){
+  passwordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for yes, or Cancel for no.");
+  passwordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for yes, or Cancel for no.");
+  passwordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for yes, or Cancel for no.");
+  passwordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for yes, or Cancel for no.");
+  console.log(passwordType);
+}
 //most of this below is what was in the original source
 
 // Get references to the #generate element
