@@ -124,6 +124,13 @@ button[disabled] {
   overflow: hidden;
 }
 
+#disclaimer {
+  font-size: 60%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
 @media (max-width: 690px) {
   .btn {
     font-size: 1rem;
@@ -134,10 +141,18 @@ button[disabled] {
   #password {
     font-size: 1rem;
   }
+
+  #disclaimer {
+    font-size: 50%;
+  }
 }
 
 @media (max-width: 500px) {
   .btn {
     font-size: 0.8rem;
+  }
+
+  #disclaimer {
+    font-size: 40%;
   }
 }
