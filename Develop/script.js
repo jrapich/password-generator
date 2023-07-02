@@ -42,7 +42,7 @@ const userPasswordType = {
 
 //asks the user for password length between 8 and 128
 function askForLength(){
-  userPassLength = prompt("Choose a password length: \nIt must be a number between 8 - 128","enter password length here");
+  userPassLength = prompt("Choose a password length: \nIt must be a number between 8 - 128");
   if (!userPassLength) {
     alert("please choose a valid number");
     console.log(userPassLength);
@@ -63,10 +63,10 @@ function askForLength(){
 
 //asks for the char types in the password and saves it in passwordType object
 function selectPassType(){
-  userPasswordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for yes, or Cancel for no.");
-  userPasswordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for yes, or Cancel for no.");
-  userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for yes, or Cancel for no.");
-  userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
+  userPasswordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
+  userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
+  userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
   userPasswordType.typeCheck();
   console.log(userPasswordType);
 }
