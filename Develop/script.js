@@ -16,6 +16,7 @@ var singleChar = "";
 const minPassLength = 8;
 const maxPassLength = 128;
 var userPassLength = 24;
+var password = "";
 
 
 //lets define all the function logic below
@@ -23,8 +24,14 @@ var userPassLength = 24;
 //this will actually create the password
 //here we want to generate a character from a random number, and add to the password
 //and repeat that until it reaches the password length requested by user
-function generatePassword(){ 
-  passMake(passHasher(randomNumberGen(0, mathChars)));
+function generatePassword(){
+  password ="";
+  console.log("begin password generation. password length selected: " + userPassLength);
+  for (j = 0; j < userPassLength; j++) {
+    passMake(passHasher(randomNumberGen(0, mathChars)));
+  }
+  console.log("generated password is " + password);
+  console.log("the password length is " + password.length);
   return password;
 }
 //random number generator
@@ -72,6 +79,8 @@ function passHasher(num) {
   }
   console.log("char group picked is: " + charPicker);
   console.log("random char generated is: " + singleChar);
+  //resetting the random number array here or else the array gets insanely big when i try to loop it
+  randomNumber = [];
   return singleChar;
 }
 //create a password based on the above random character
@@ -97,10 +106,17 @@ function writePassword() {
    //sets some arrays/vars to blank at the end
   //so when the user clicks the button and this generator executes again
   //they don't include the previous result
+  //TODO: test to see if this is indeed resetting them like I think it is
   randomNumber = [];
   tempNumber = 0;
   singleChar = "";
-  password = ""; 
+  password = "";
+  return {
+    randomNumber,
+    tempNumber,
+    singleChar,
+    password
+  } 
 }
 
 // Add event listener to generate button
