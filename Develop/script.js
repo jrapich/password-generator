@@ -38,40 +38,39 @@ const userPasswordType = {
   }
 }
 
-
 //lets define all the function logic below
 
-//this will actually create the password
-//here we want to generate a character from a random number, and add to the password
-//and repeat that until it reaches the password length requested by user
-function generatePassword(){
-  password ="";
-  askForLength();
-    if (!userPassLength) {
-      password = "ERROR: please pick a valid length.";
-    return password;
-  } else if (userPassLength < minPassLength) {
-      password = "ERROR: " + userPassLength + " is too small, please pick a valid length.";
-      return password;
+//asks the user for password length between 8 and 128
+function askForLength(){
+  userPassLength = prompt("Choose a password length: \nIt must be a number between 8 - 128","enter password length here");
+  if (!userPassLength) {
+    alert("please choose a valid number");
+    console.log(userPassLength);
+    return userPassLength;
+  }
+  //this converts the users password length to a number as prompts return only strings
+  userPassLength = parseInt(userPassLength, 10);
+  if (userPassLength < minPassLength) {
+      alert("you must choose a number between 8 and 128");
   } else if (userPassLength > maxPassLength) {
-      password = `ERROR: ${userPassLength} is too big, please pick a valid length.`;
-      return password;
-  } else { 
-      selectPassType();
-      if (!userPasswordType.isValid) {
-        password = "ERROR: you must choose at least one character type."
-        return password;
-      } else {
-          console.log("begin password generation. password length selected: " + userPassLength);
-          for (j = 0; j < userPassLength; j++) {
-            passMake(passHasher(randomNumberGen(0, mathChars)));
-          }
-          console.log("generated password is " + password);
-          console.log("the password length is " + password.length);
-          return password;
-        }
+      alert("you must choose a number between 8 and 128");
+  } else if (userPassLength > minPassLength && userPassLength < maxPassLength || userPassLength === minPassLength || userPassLength === maxPassLength) {
+      return userPassLength;
+  } else {
+      alert("please choose a valid number");
   }
 }
+
+//asks for the char types in the password and saves it in passwordType object
+function selectPassType(){
+  userPasswordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for yes, or Cancel for no.");
+  userPasswordType.typeCheck();
+  console.log(userPasswordType);
+}
+
 //random number generator
 //will pick a number between 0 and the length of each of the char arrays above
 //will return a number for each of the possibly needed char groups
@@ -81,7 +80,7 @@ function randomNumberGen (min, max) {
   //this should generate the number we need for each of the array groups above
   function numberCalc() {
     function randomMath() {
-      tempNumber = Math.floor(Math.random() * (max[i] - min + 1) ) + min;
+      tempNumber = Math.floor(Math.random() * (max[i] - min + 1)) + min;
       return tempNumber;
     }
     for (i = 0; i < max.length; i++) {
@@ -93,9 +92,9 @@ function randomNumberGen (min, max) {
   console.log(" the random number array is " + randomNumber);
   return randomNumber;
 }
+
 //character picker based on random number, will pass one random char
 function passHasher(num) {
-  //new logic for using only the chars the user selected is as follows
   var charPicker = {
     type: ["upper", "lower", "special", "number"],
     pickedType: [],
@@ -130,7 +129,7 @@ function passHasher(num) {
     }
   }
   userPickedChar();
-  //generate a char based on random number and users choice
+  //generate a char based on  generated random number and users choice
   charPicker.pickedType = charPicker.pickedType[Math.floor(Math.random() * charPicker.pickedType.length)];
   if (charPicker.pickedType === "upper") {
       singleChar = upperCase[randomNumber[0]];
@@ -156,54 +155,58 @@ function passHasher(num) {
   return singleChar;
 }
     
-//create a password based on the above random character
+//add a character to the password based on the above random character selected
 function passMake(char) {
   password = password + char;
   return password;
 }
 
-//lets define the prompts/alerts and their logic
-
-//asks the user for password length between 8 andd 128
-function askForLength(){
-  userPassLength = prompt("Choose a password length: \nIt must be a number between 8 - 128","enter password length here");
-  if (!userPassLength) {
-    alert("please choose a valid number");
-    console.log(userPassLength);
-    return userPassLength;
-  }
-  userPassLength = parseInt(userPassLength, 10);
-  if (userPassLength < minPassLength) {
-      alert("you must choose a number between 8 and 128");
+//this below using all the above functions and  will actually create the password;
+//here we want to generate a character from a random number, and add to the password
+//and repeat that until it reaches the password length requested by user;
+//password must be a certain length, and user must pick at least one character group;
+//will throw errors otherwise
+function generatePassword(){
+  password ="";
+  askForLength();
+    if (!userPassLength) {
+      password = "ERROR: please pick a valid length.";
+    return password;
+  } else if (userPassLength < minPassLength) {
+      password = "ERROR: " + userPassLength + " is too small, please pick a valid length.";
+      return password;
   } else if (userPassLength > maxPassLength) {
-      alert("you must choose a number between 8 and 128");
-  } else if (userPassLength > minPassLength && userPassLength < maxPassLength || userPassLength === minPassLength || userPassLength === maxPassLength) {
-      return userPassLength;
-  } else {
-      alert("please choose a valid number");
+      password = `ERROR: ${userPassLength} is too big, please pick a valid length.`;
+      return password;
+  } else { 
+      selectPassType();
+      if (!userPasswordType.isValid) {
+        password = "ERROR: you must choose at least one character type."
+        return password;
+      } else {
+          console.log("begin password generation. password length selected: " + userPassLength);
+          for (j = 0; j < userPassLength; j++) {
+            passMake(passHasher(randomNumberGen(0, mathChars)));
+          }
+          console.log("generated password is " + password);
+          console.log("the password length is " + password.length);
+          return password;
+        }
   }
 }
-//asks for the char types in the password and saves it in passwordType object
-function selectPassType(){
-  userPasswordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for yes, or Cancel for no.");
-  userPasswordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for yes, or Cancel for no.");
-  userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for yes, or Cancel for no.");
-  userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for yes, or Cancel for no.");
-  userPasswordType.typeCheck();
-  console.log(userPasswordType);
-}
+
 //most of this below is what was in the original source
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-// Write password to the #password input
+// Write password to the #password input when user clicks button
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 
-   //sets some arrays/vars to blank at the end
+  //sets some arrays/vars to blank at the end
   //so when the user clicks the button and this generator executes again
   //they don't include the previous result
   //TODO: test to see if this is indeed resetting them like I think it is
