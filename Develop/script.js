@@ -64,7 +64,7 @@ function generatePassword(){
       } else {
           console.log("begin password generation. password length selected: " + userPassLength);
           for (j = 0; j < userPassLength; j++) {
-          passMake(passHasher(randomNumberGen(0, mathChars)));
+            passMake(passHasher(randomNumberGen(0, mathChars)));
           }
           console.log("generated password is " + password);
           console.log("the password length is " + password.length);
@@ -95,34 +95,6 @@ function randomNumberGen (min, max) {
 }
 //character picker based on random number, will pass one random char
 function passHasher(num) {
-  //the old charPicker logic for future study/reference:
-    // var charPicker = ["upper", "lower", "special", "number"];
-    // charPicker = charPicker[Math.floor(Math.random() * charPicker.length)];
-    //not using these next 2 lines anymore but want to leave it here for future study/reference
-    //as it took so long to figure out at the time. haha
-    //tempNumber = Math.floor(Math.random() * num.length);
-    //tempNumber = randomNumber[tempNumber];
-    // if (charPicker === "upper") {
-    //   singleChar = upperCase[randomNumber[0]];
-    //   console.log("random number picked for char group is: " + randomNumber[0]);
-    // } 
-    // if (charPicker === "lower") {
-    //   singleChar = lowerCase[randomNumber[1]];
-    //   console.log("random number picked for char group is: " + randomNumber[1]);
-    // }
-    // if (charPicker === "special") {
-    //   singleChar = specialChar[randomNumber[2]];
-    //   console.log("random number picked for char group is: " + randomNumber[2]);
-    // }
-    // if (charPicker === "number") {
-    //   singleChar = numeric[randomNumber[3]];
-    //   console.log("random number picked for char group is: " + randomNumber[3]);
-    // }
-    // console.log("char group picked is: " + charPicker);
-    // console.log("random char generated is: " + singleChar);
-    // return singleChar;
-
-
   //new logic for using only the chars the user selected is as follows
   var charPicker = {
     type: ["upper", "lower", "special", "number"],
@@ -208,7 +180,7 @@ function askForLength(){
   } else if (userPassLength > minPassLength && userPassLength < maxPassLength || userPassLength === minPassLength || userPassLength === maxPassLength) {
       return userPassLength;
   } else {
-    alert("please choose a valid number");
+      alert("please choose a valid number");
   }
 }
 //asks for the char types in the password and saves it in passwordType object
