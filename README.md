@@ -3,18 +3,32 @@
 ## Description
 
 - This site generates passwords to a specified length by the user(between 8 and 128 in length) and will generate passwords from the following character groups:
+
 -- Lower Case Letters
+
 -- Upper Case Letters
+
 -- Special CHaracters
+
 -- Numbers
+
 - The user is able to chose from any/all of these groups, and the user must choose at least one group.
 
 - With this project I was excited to put the knowledge with JS I've learned so far into use. I was feeling quite confident after the first intro to JS week, JS definitely seems more logical than CSS.
+
 -I learned that its somehwat easier to build all the components necessary step by step, in bite sized peices, one thing at a time. Doing this was easier for me to manage, as the last project I was much more scattered and it took much more time and effort to complete than this one.
+
 -I also learned how useful stackexchange is! There were a few things I was uncertain about, as well as some things i didnt quite know how to accomplish, but with google and websites like stackexchange, w3 schools, mozilla MDN documentation etc I was able to figure out quite a lot. The most helpful of these to me for this project I have included in the credits section.
 
 
 ## Usage
+
+Link to the deployed application:
+
+[Application](https://jrapich.github.io/password-generator/)
+
+Link to the repo containing the code for this application:
+[Repository](https://github.com/jrapich/password-generator)
 
 Usage is simple. Click the  generate button, follow the prompts to determine the length of the password and which character groups the password will be generated from. If any are entered incorrectly or if an incorrecct value is entered, the page will alert the user. 
 
