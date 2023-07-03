@@ -2,8 +2,7 @@
 //lets declare all the things
 var alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var numbers = "0123456789";
-//TODO: figure out how to add " and ' into the string below without it messing up
-var specials = "!#$%&()*+,-./:;<=>?@[\]^_`{|}~";
+var specials = "!#$%&()*+,-./:;<=>?@[\"']^_`{|}~";
 var lower = alphaNumeric.toLowerCase();
 const upperCase = alphaNumeric.split("");
 const lowerCase = lower.split(""); 
