@@ -68,7 +68,7 @@ function selectPassType(){
   userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
   userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
   userPasswordType.typeCheck();
-  console.log(userPasswordType);
+  //console.log(userPasswordType);
 }
 
 //random number generator
@@ -89,7 +89,7 @@ function randomNumberGen (min, max) {
     return randomNumber;
   }
   numberCalc();
-  console.log(" the random number array is " + randomNumber);
+  //console.log(" the random number array is " + randomNumber);
   return randomNumber;
 }
 
@@ -133,22 +133,22 @@ function passHasher(num) {
   charPicker.pickedType = charPicker.pickedType[Math.floor(Math.random() * charPicker.pickedType.length)];
   if (charPicker.pickedType === "upper") {
       singleChar = upperCase[randomNumber[0]];
-      console.log("random number picked for char group is: " + randomNumber[0]);
+      //console.log("random number picked for char group is: " + randomNumber[0]);
     }
     if (charPicker.pickedType === "lower") {
       singleChar = lowerCase[randomNumber[1]];
-      console.log("random number picked for char group is: " + randomNumber[1]);
+      //console.log("random number picked for char group is: " + randomNumber[1]);
     } 
     if (charPicker.pickedType === "special") {
       singleChar = specialChar[randomNumber[2]];
-      console.log("random number picked for char group is: " + randomNumber[2]);
+      //console.log("random number picked for char group is: " + randomNumber[2]);
     } 
     if (charPicker.pickedType === "number") {
       singleChar = numeric[randomNumber[3]];
-      console.log("random number picked for char group is: " + randomNumber[3]);
+      //console.log("random number picked for char group is: " + randomNumber[3]);
     }
-    console.log("char group picked is: " + charPicker.pickedType);
-    console.log("random char generated is: " + singleChar);
+    //console.log("char group picked is: " + charPicker.pickedType);
+    //console.log("random char generated is: " + singleChar);
 
   //resetting the random number array here or else the array gets insanely big when i try to loop it
   randomNumber = [];
