@@ -1,13 +1,9 @@
- // Assignment code here
 //lets declare all the things
-var alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var numbers = "0123456789";
-var specials = "!#$%&()*+,-./:;<=>?@[\"']^_`{|}~";
-var lower = alphaNumeric.toLowerCase();
+const alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const upperCase = alphaNumeric.split("");
-const lowerCase = lower.split(""); 
-const specialChar = specials.split("");
-const numeric = numbers.split("");
+const lowerCase = alphaNumeric.toLowerCase().split(""); 
+const specialChar = "!#$%&()*+,-./:;<=>?@[\"']^_`{|}~".split("");
+const numeric = "0123456789".split("");
 const mathChars = [upperCase.length -1,  lowerCase.length -1, specialChar.length - 1, numeric.length -1];
 var randomNumber = [];
 var tempNumber = 0;
