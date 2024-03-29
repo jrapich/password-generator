@@ -70,20 +70,10 @@ function selectPassType(){
 //will pick a number between 0 and the length of each of the char arrays above
 //will return a number for each of the possibly needed char groups
 function randomNumberGen (min, max) {
-  min = 0;
-  //I got the following equation from w3schools and put it in a for loop
   //this should generate the number we need for each of the array groups above
-  function numberCalc() {
-    function randomMath() {
-      tempNumber = Math.floor(Math.random() * (max[i] - min + 1)) + min;
-      return tempNumber;
-    }
-    for (i = 0; i < max.length; i++) {
-      randomNumber.push(randomMath());
-    };
-    return randomNumber;
-  }
-  numberCalc();
+  for (i = 0; i < max.length; i++) {
+    randomNumber.push(Math.floor(Math.random() * (max[i] - min + 1)) + min);
+  };
   //console.log(" the random number array is " + randomNumber);
   return randomNumber;
 }
