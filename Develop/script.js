@@ -1,149 +1,104 @@
 //lets declare all the things
-const alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const upperCase = alphaNumeric.split("");
-const lowerCase = alphaNumeric.toLowerCase().split(""); 
-const specialChar = "!#$%&()*+,-./:;<=>?@[\"']^_`{|}~".split("");
-const numeric = "0123456789".split("");
-const mathChars = [upperCase.length -1,  lowerCase.length -1, specialChar.length - 1, numeric.length -1];
-var randomNumber = [];
-var tempNumber = 0;
-var singleChar = "";
+const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const lowerCase = upperCase.toLowerCase();
+const specialChar = "!#$%&()*+,-./:;<=>?@[\"']^_`{|}~";
+const numeric = "0123456789";
 const minPassLength = 8;
 const maxPassLength = 128;
-var userPassLength = 0;
-var password = "";
 const userPasswordType = {
-  isUpperCase: true,
-  isLowerCase: true,
-  isSpecialChars: true,
-  isNumbers: true,
-  isValid: true,
-  typeCheck: function() {
+  isUpperCase: false,
+  isLowerCase: false,
+  isSpecialChars: false,
+  isNumbers: false,
+  isValid: false,
+  typeCheck: function () {
     if (
       this.isLowerCase === null &&
       this.isUpperCase === null &&
       this.isSpecialChars === null &&
       this.isNumbers === null
     ) {
-      this.isValid = false;
       return this.isValid;
     } else {
-      return;
+      this.isValid = true;
+      return this.isValid;
     }
+  },
+};
+
+//random number generator, picks a number between min and max(inclusive)
+//will use this to return a number to randomly pick a number between given values, or wherever we will need a random number
+function randomIndex(min, max) {
+  //max will be an array length. if array length is 1, return 0
+  if (max === 1) {
+    return 0;
   }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//lets define all the function logic below
-
 //asks the user for password length between 8 and 128
-function askForLength(){
-  userPassLength = prompt("Choose a password length: \nIt must be a number between 8 - 128");
+function askForLength() {
+  let userPassLength = prompt(
+    "Choose a password length: \nIt must be a number between 8 - 128"
+  );
   if (!userPassLength) {
     alert("please choose a valid number");
-    console.log(userPassLength);
     return userPassLength;
   }
   //this converts the users password length to a number as prompts return only strings
   userPassLength = parseInt(userPassLength, 10);
-  if (userPassLength < minPassLength) {
-      alert("you must choose a number between 8 and 128");
-  } else if (userPassLength > maxPassLength) {
-      alert("you must choose a number between 8 and 128");
-  } else if (userPassLength > minPassLength && userPassLength < maxPassLength || userPassLength === minPassLength || userPassLength === maxPassLength) {
-      return userPassLength;
+  if (userPassLength < minPassLength || userPassLength > maxPassLength) {
+    alert("you must choose a number between 8 and 128");
+  } else if (
+    (userPassLength > minPassLength && userPassLength < maxPassLength) ||
+    userPassLength === minPassLength ||
+    userPassLength === maxPassLength
+  ) {
+    return userPassLength;
   } else {
-      alert("please choose a valid number");
+    alert("please choose a valid number");
   }
 }
 
 //asks for the char types in the password and saves it in passwordType object
-function selectPassType(){
-  userPasswordType.isLowerCase = prompt("Do you want to use lower case letters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
-  userPasswordType.isUpperCase = prompt("Do you want to use upper case letters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
-  userPasswordType.isSpecialChars = prompt("Do you want to use special characters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
-  userPasswordType.isNumbers = prompt("Do you want to use numbers? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password.");
+function selectPassType() {
+  userPasswordType.isLowerCase = prompt(
+    "Do you want to use lower case letters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password."
+  );
+  userPasswordType.isLowerCase === ""
+    ? (userPasswordType.isLowerCase = true)
+    : null;
+  userPasswordType.isUpperCase = prompt(
+    "Do you want to use upper case letters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password."
+  );
+  userPasswordType.isUpperCase === ""
+    ? (userPasswordType.isUpperCase = true)
+    : null;
+  userPasswordType.isSpecialChars = prompt(
+    "Do you want to use special characters? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password."
+  );
+  userPasswordType.isSpecialChars === ""
+    ? (userPasswordType.isSpecialChars = true)
+    : null;
+  userPasswordType.isNumbers = prompt(
+    "Do you want to use numbers? \nPress OK for YES, or Cancel for NO. \nWhatever you type here doesn't influence the password."
+  );
+  userPasswordType.isNumbers === ""
+    ? (userPasswordType.isNumbers = true)
+    : null;
   userPasswordType.typeCheck();
-  //console.log(userPasswordType);
 }
 
-//random number generator
-//will pick a number between 0 and the length of each of the char arrays above
-//will return a number for each of the possibly needed char groups
-function randomNumberGen (min, max) {
-  //this should generate the number we need for each of the array groups above
-  for (i = 0; i < max.length; i++) {
-    randomNumber.push(Math.floor(Math.random() * (max[i] - min + 1)) + min);
-  };
-  //console.log(" the random number array is " + randomNumber);
-  return randomNumber;
-}
-
-//character picker based on random number, will pass one random char
-function passHasher(num) {
-  var charPicker = {
-    type: ["upper", "lower", "special", "number"],
-    pickedType: [],
-    useUpper: true,
-    useLower: true,
-    useSpecial: true,
-    useNumber: true
-  }
-  //set the charpicker to match what the user chose
-  if (userPasswordType.isLowerCase === null) {
-    charPicker.useUpper = false;
-  } if (userPasswordType.isUpperCase === null) {
-    charPicker.useLower = false;
-  } if (userPasswordType.isSpecialChars === null) {
-    charPicker.useSpecial = false;
-  } if (userPasswordType.isNumbers === null) {
-    charPicker.useNumber = false;
-  }
-  //add only the users choices to the group of chars
-  function userPickedChar() {
-    if (charPicker.useUpper) {
-      charPicker.pickedType.push("upper");
-    }
-    if (charPicker.useLower) {
-      charPicker.pickedType.push("lower");
-    }
-    if (charPicker.useSpecial) {
-      charPicker.pickedType.push("special");
-    }
-    if (charPicker.useNumber) {
-      charPicker.pickedType.push("number")
-    }
-  }
-  userPickedChar();
-  //generate a char based on  generated random number and users choice
-  charPicker.pickedType = charPicker.pickedType[Math.floor(Math.random() * charPicker.pickedType.length)];
-  if (charPicker.pickedType === "upper") {
-      singleChar = upperCase[randomNumber[0]];
-      //console.log("random number picked for char group is: " + randomNumber[0]);
-    }
-    if (charPicker.pickedType === "lower") {
-      singleChar = lowerCase[randomNumber[1]];
-      //console.log("random number picked for char group is: " + randomNumber[1]);
-    } 
-    if (charPicker.pickedType === "special") {
-      singleChar = specialChar[randomNumber[2]];
-      //console.log("random number picked for char group is: " + randomNumber[2]);
-    } 
-    if (charPicker.pickedType === "number") {
-      singleChar = numeric[randomNumber[3]];
-      //console.log("random number picked for char group is: " + randomNumber[3]);
-    }
-    //console.log("char group picked is: " + charPicker.pickedType);
-    //console.log("random char generated is: " + singleChar);
-
-  //resetting the random number array here or else the array gets insanely big when i try to loop it
-  randomNumber = [];
-  return singleChar;
-}
-    
-//add a character to the password based on the above random character selected
-function passMake(char) {
-  password = password + char;
-  return password;
+//character picker based on random number, adds that character to password so far
+function passHasher(userPasswordType, password) {
+  let charSet = "";
+  userPasswordType.isUpperCase ? (charSet = charSet.concat(upperCase)) : null;
+  userPasswordType.isLowerCase ? (charSet = charSet.concat(lowerCase)) : null;
+  userPasswordType.isSpecialChars ? (charSet = charSet.concat(specialChar)) : null;
+  userPasswordType.isNumbers ? (charSet = charSet.concat(numeric)) : null;
+  charSet = charSet.split("");
+  const finalChar = charSet[randomIndex(1, charSet.length) - 1];
+  return password + finalChar;
 }
 
 //this below using all the above functions and  will actually create the password;
@@ -151,60 +106,45 @@ function passMake(char) {
 //and repeat that until it reaches the password length requested by user;
 //password must be a certain length, and user must pick at least one character group;
 //will throw errors otherwise
-function generatePassword(){
-  password ="";
-  askForLength();
-    if (!userPassLength) {
-      password = "ERROR: please pick a valid length.";
+function generatePassword() {
+  let password = "";
+  const userPassLength = askForLength();
+  if (!userPassLength) {
+    password = "ERROR: please pick a valid length.";
     return password;
   } else if (userPassLength < minPassLength) {
-      password = "ERROR: " + userPassLength + " is too small, please pick a valid length.";
-      return password;
+    password =
+      "ERROR: " + userPassLength + " is too small, please pick a valid length.";
+    return password;
   } else if (userPassLength > maxPassLength) {
-      password = `ERROR: ${userPassLength} is too big, please pick a valid length.`;
+    password = `ERROR: ${userPassLength} is too big, please pick a valid length.`;
+    return password;
+  } else {
+    selectPassType();
+    if (!userPasswordType.isValid) {
+      password = "ERROR: you must choose at least one character type.";
       return password;
-  } else { 
-      selectPassType();
-      if (!userPasswordType.isValid) {
-        password = "ERROR: you must choose at least one character type."
-        return password;
-      } else {
-          console.log("begin password generation. password length selected: " + userPassLength);
-          for (j = 0; j < userPassLength; j++) {
-            passMake(passHasher(randomNumberGen(0, mathChars)));
-          }
-          console.log("generated password is " + password);
-          console.log("the password length is " + password.length);
-          return password;
-        }
+    } else {
+      console.log(
+        "begin password generation. password length selected: " + userPassLength
+      );
+      for (j = 0; j < userPassLength; j++) {
+        password = passHasher(userPasswordType, password);
+      }
+      console.log("generated password is " + password);
+      console.log("the password length is " + password.length);
+      return password;
+    }
   }
 }
-
-//most of this below is what was in the original source
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input when user clicks button
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password;
-
-  //sets some arrays/vars to blank at the end
-  //so when the user clicks the button and this generator executes again
-  //they don't include the previous result
-  //TODO: test to see if this is indeed resetting them like I think it is
-  randomNumber = [];
-  tempNumber = 0;
-  singleChar = "";
-  password = "";
-  return {
-    randomNumber,
-    tempNumber,
-    singleChar,
-    password
-  } 
+  document.querySelector("#password").value = generatePassword();
+  return;
 }
 
 // Add event listener to generate button
